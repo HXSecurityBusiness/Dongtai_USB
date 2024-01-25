@@ -24,6 +24,7 @@ func (s *USB_Zap) Zap_cron(before time.Time, after time.Time) {
 	req, err := http.NewRequest("GET", zapUrl, nil)
 	if err != nil {
 		config.Log.Printf("http.Get: %v\n", err)
+		return
 	}
 
 	// req.Header.Set("token", config.Viper.GetString("usb.xray_token"))
@@ -35,6 +36,7 @@ func (s *USB_Zap) Zap_cron(before time.Time, after time.Time) {
 	res, err := client.Do(req)
 	if err != nil {
 		config.Log.Printf("client: %v\n", err)
+		return
 	}
 	defer res.Body.Close()
 	body, err := io.ReadAll(res.Body)
@@ -79,9 +81,9 @@ func (s *USB_Zap) Zap_cron(before time.Time, after time.Time) {
 		resResponse, err := json.Marshal(response)
 		if err != nil {
 			config.Log.Printf("无法解析json")
-		} else {
-			config.Log.Print(string(resResponse))
+			return
 		}
+		config.Log.Print(string(resResponse))
 		config.Log.Print(service.Client(response))
 	}
 }
