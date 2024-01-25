@@ -58,7 +58,7 @@ jobs:
           platforms: linux/amd64,linux/arm64
           push: true
           tags: |
-            ${{ secrets.ALIYUN_REGISTRY }}/huoxian_pub/usb:v${{ env.tag_version }}
+            ${{ secrets.ALIYUN_REGISTRY }}/dongtai/usb:v${{ env.tag_version }}
       - name: Build and push mitmproxy
         uses: docker/build-push-action@v3
         with:
@@ -67,7 +67,7 @@ jobs:
           platforms: linux/amd64,linux/arm64
           push: true
           tags: |
-            ${{ secrets.ALIYUN_REGISTRY }}/huoxian_pub/mitmproxy:v${{ env.tag_version }}
+            ${{ secrets.ALIYUN_REGISTRY }}/dongtai/mitmproxy:v${{ env.tag_version }}
       - name: Build and push xray
         uses: docker/build-push-action@v3
         with:
@@ -76,4 +76,4 @@ jobs:
           platforms: linux/amd64,linux/arm64
           push: true
           tags: |
-            ${{ secrets.ALIYUN_REGISTRY }}/huoxian_pub/xray:v${{ env.tag_version }}
+            ${{ secrets.ALIYUN_REGISTRY }}/dongtai/xray:v${{ env.tag_version }}
