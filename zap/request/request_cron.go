@@ -50,13 +50,13 @@ func (s *USB_Zap) Zap_cron(before time.Time, after time.Time) {
 		res, err := engine_Zap.ReadHTTP(data.RequestMessages)
 		if err != nil {
 			config.Log.Print(err)
-			return
+			continue
 		}
 
 		agent := res[0].Response.Header.Get("Dt-Request-Id")
 		if agent == "" {
 			config.Log.Printf("找不到 Dt-Request-Id 请求头")
-			return
+			continue
 		}
 
 		engine := engine_Zap.EngineZap(agent, res)
@@ -81,7 +81,7 @@ func (s *USB_Zap) Zap_cron(before time.Time, after time.Time) {
 		resResponse, err := json.Marshal(response)
 		if err != nil {
 			config.Log.Printf("无法解析json")
-			return
+			continue
 		}
 		config.Log.Print(string(resResponse))
 		config.Log.Print(service.Client(response))

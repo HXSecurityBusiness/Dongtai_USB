@@ -65,13 +65,13 @@ func (s *USB_Xray) Xray_cron(before time.Time, after time.Time) {
 		Detail, Connection, err := engine_Xray.ReadHTTP_max(xray_max.Detail)
 		if err != nil {
 			config.Log.Print(err)
-			return
+			continue
 		}
 		config.Log.Println(xray_max.Detail)
 		agent := Connection[0].Response.Header.Get("Dt-Request-Id")
 		if agent == "" {
 			config.Log.Printf("找不到 Dt-Request-Id 请求头")
-			return
+			continue
 		}
 
 		Response := &service.Response{
@@ -93,7 +93,7 @@ func (s *USB_Xray) Xray_cron(before time.Time, after time.Time) {
 		resResponse, err := json.Marshal(Response)
 		if err != nil {
 			config.Log.Printf("无法解析json")
-			return
+			continue
 		}
 		config.Log.Print(string(resResponse))
 		config.Log.Print(service.Client(Response))
